@@ -1,8 +1,13 @@
 ---
-title: "Manipulate Exercises"
+title: "Manipulate"
 author: "Halie"
 date: "6/22/2021"
-output: html_document
+output: 
+  html_document:
+    toc: true 
+    toc_depth: 3
+    toc_float: true
+    code_floating: "show"
 ---
 
 ```{r setup, include=FALSE}
@@ -108,6 +113,28 @@ datatable(d_sum) %>%
   formatCurrency("avg_revenue")
 ```
 
+### Apply functions with 'purrr' on a 'nest''ed 'tibble'
+
+```{r}
+library(purrr)
+
+n <- d %>% 
+  group_by(region) %>% 
+  nest(data = c(time, value))
+n
+
+n <- n %>% 
+  mutate(lm = map(data, function(d){
+    lm(value ~ time, d)
+  }),
+  trend = map_dbl(lm, function(m){
+    coef(summary(m))["time", "Estimate"]}))
+n
+
+n %>% 
+  select(region, trend) %>%
+  datatable()
+```
 
 
 
