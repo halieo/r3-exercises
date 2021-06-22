@@ -1,0 +1,102 @@
+---
+title: "Manipulate Exercises"
+author: "Halie"
+date: "6/22/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Read online table
+
+### Download table ('*.csv')
+
+```{r}
+# set variables
+csv_url <- "https://oceanview.pfeg.noaa.gov/erddap/tabledap/cciea_AC.csv"
+dir_data <- "data"
+
+# derived variables
+csv <- file.path(dir_data, basename(csv_url))
+
+# create directory
+dir.create(dir_data)
+
+# download file
+download.file(csv_url, csv)
+```
+### Read table 'read.csv()'
+
+```{r}
+# attempt to read csv
+d <- read.csv(csv)
+
+# show the data frame
+#d
+
+```
+
+```{r}
+# read csv  by skipping first two lines, so no header
+d <- read.csv(csv, skip = 2, header = FALSE)
+#d
+
+# update data frame to original column names
+names(d) <- names(read.csv(csv))
+#d
+```
+### Show table 'DT::datatable()'
+
+```{r}
+## show table
+DT::datatable(d)
+
+library(DT)
+datatable(d)
+```
+
+## Wrangle data
+
+### Manipulate with 'dplyr'
+
+```{r}
+library(DT)
+library(dplyr)
+
+d <- d %>%
+  # tibble
+  tibble() %>% 
+  #mutate time
+  mutate(
+    time = as.Date(substr(time, 1, 10))) %>%
+  # select columns
+  select(time, starts_with("total_fisheries_revenue")) %>%
+  # filter rows
+  filter(time >= as.Date("1981-01-01"))
+
+datatable(d)
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
