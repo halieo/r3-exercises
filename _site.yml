@@ -6,4 +6,6 @@ navbar:
       href: index.html
     - text: "Collaborate"
       href: collaborate.html
+    - text: "Manipulate"
+      href: Manipulate.html
 output_dir: "."

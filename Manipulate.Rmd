@@ -80,7 +80,33 @@ datatable(d)
   
 ```
 
+### Tidy with 'tidyr'
 
+```{r}
+library(tidyr)
+
+d <- d %>% 
+  pivot_longer(-time)
+
+datatable(d)
+```
+
+### Summarize with 'dplyr'
+
+```{r}
+library(stringr)
+
+d <- d %>% 
+  mutate(region = str_replace(name, "total_fisheries_revenue_", "")) %>%
+  select(time, region, value)
+datatable(d)
+
+d_sum <- d %>% 
+  group_by(region) %>% 
+  summarize(avg_revenue = mean(value))
+datatable(d_sum) %>% 
+  formatCurrency("avg_revenue")
+```
 
 
 
