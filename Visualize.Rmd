@@ -9,7 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Read in data
+# 3. Visualize
+
+## 3.1 Read in data
 
 ```{r}
 # libraries
@@ -29,9 +31,10 @@ names(d_ac) <- names(read_csv(url_ac))
 # show data
 datatable(d_ac)
 ```
-### 3.2 Plot statistically with `ggplot2`
 
-## 3.2.1 Simple line plot `+ geom_line()`
+## 3.2 Plot statistically with `ggplot2`
+
+### 3.2.1 Simple line plot `+ geom_line()`
 
 ```{r}
 library(dplyr)
@@ -55,15 +58,16 @@ p_coast <- d_coast %>%
 # show plot
 p_coast
 ```
-## 3.2.2 Trend line `+ geom_smooth()`
 
-# Add a smooth layer based on linear model
+### 3.2.2 Trend line `+ geom_smooth()`
+
+Add a smooth layer based on linear model
 
 ```{r}
 p_coast + geom_smooth(method = "gam")
 ```
 
-## 3.2.3 Distribution of values `+ geom_histogram()`
+### 3.2.3 Distribution of values `+ geom_histogram()`
 
 ```{r}
 d_coast %>%
@@ -73,7 +77,7 @@ d_coast %>%
   geom_histogram()
 ```
 
-## 3.2.4 Series line plot `aes(color = region)`
+### 3.2.4 Series line plot `aes(color = region)`
 
 ```{r}
 library(stringr)
@@ -107,7 +111,7 @@ p_rgn
 ```
 
 
-## 3.2.5 Update labels `+ labs()`
+### 3.2.5 Update labels `+ labs()`
 
 ```{r}
 p_rgn <- p_rgn +
@@ -115,13 +119,13 @@ p_rgn <- p_rgn +
 p_rgn
 ```
 
-## 3.2.6 Multiple plots with `facet_wrap()`
+### 3.2.6 Multiple plots with `facet_wrap()`
 
 ```{r}
 p_rgn + facet_wrap(vars(region))
 ```
 
-## 3.2.7 Bar plot `+ geom_col()`
+### 3.2.7 Bar plot `+ geom_col()`
 
 ```{r}
 library(glue)
@@ -141,7 +145,7 @@ d_rgn %>%
   labs(title = glue("Fisheries Revenue for {yr_max}"), x = "Region", y = "Millions $ (year 2015)", fill = "Region")
 ```
 
-## 3.2.8 Variation of series with `+ geom_boxplot()`
+### 3.2.8 Variation of series with `+ geom_boxplot()`
 
 ```{r}
 d_rgn %>% 
@@ -155,7 +159,7 @@ d_rgn %>%
   theme(legend.position = "none")
 ```
 
-## 3.2.9 Variation of series with `+ geom_violin()`
+### 3.2.9 Variation of series with `+ geom_violin()`
 
 ```{r}
 p_rgn_violin <- d_rgn %>% 
@@ -170,15 +174,15 @@ p_rgn_violin <- d_rgn %>%
 p_rgn_violin
 ```
 
-## 3.2.10 Change Theme `theme()`
+### 3.2.10 Change Theme `theme()`
 
 ```{r}
 p_rgn_violin + theme_classic()
 ```
 
-### 3.3 Plot interactively with `plotly` or `dygraphs`
+## 3.3 Plot interactively with `plotly` or `dygraphs`
 
-## 3.3.1 Make ggplot interactive with `plotly::ggplotly`
+### 3.3.1 Make ggplot interactive with `plotly::ggplotly`
 
 ```{r}
 library(plotly)
@@ -186,7 +190,7 @@ library(plotly)
 ggplotly(p_rgn)
 ```
 
-## 3.3.2 Create interactive time series with `dygraphs::dygraph`
+### 3.3.2 Create interactive time series with `dygraphs::dygraph`
 
 ```{r}
 library(dygraphs)
