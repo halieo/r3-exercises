@@ -10,4 +10,6 @@ navbar:
       href: Manipulate.html
     - text: "Visualize"
       href: Visualize.html
+    - text: "Map"
+      href: map.html
 output_dir: "."
