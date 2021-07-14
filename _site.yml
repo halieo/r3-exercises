@@ -11,5 +11,5 @@ navbar:
     - text: "Visualize"
       href: Visualize.html
     - text: "Map"
-      href: map.html
+      href: Map.html
 output_dir: "."
