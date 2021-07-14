@@ -16,6 +16,7 @@ output: html_document
 if(!require(librarian)){
   install.packages("librarian")
   library(librarian)
+  library(Rcpp)
 }
 
 #librarian::shelf() is like library() except installs package if missing, even from Github if include owner/repo
@@ -70,7 +71,7 @@ shelf(here, rerddap)
 
 sst_gd_rds <- here("data/sst_gd.rds")
 
-epu_bb <- sst_bbox(epu_sf)
+epu_bb <- st_bbox(epu_sf)
 epu_bb
 
 sst_info <- info('jplMURSST41mday')
@@ -98,7 +99,7 @@ sst_df_last <- sst_gd$data %>%
 
 # summary(sst_last)
 
-ggplot(data = sst_df_last, aes(x = long, y = lat, fill = sst)) + geom_polygon(data = coast, aes(x = long, y = lat, group = group), fill = "grey80") + geom_tile() + scale_fill_gradientn(colors = rerddap::colors$temperature, na.value = NA) + theme_bw() + ylab("Latitude") + xlab("Longitude") + ggtitle("Latest SST")
+ggplot(data = sst_df_last, aes(x = lon, y = lat, fill = sst)) + geom_polygon(data = coast, aes(x = long, y = lat, group = group), fill = "grey80") + geom_tile() + scale_fill_gradientn(colors = rerddap::colors$temperature, na.value = NA) + theme_bw() + ylab("Latitude") + xlab("Longitude") + ggtitle("Latest SST")
 ```
 
 ```{r}
@@ -143,7 +144,7 @@ epu_sst_sd %>%
   pivot_longer(-c(EPU, stat))) %>%
   mutate(EPU = as.character(EPU), date = as.double(str_replace(name, "sst_", ""))) %>%
   select(-name) %>%
-  pivot_wider(names_from = EPU, values_from + value)
+  pivot_wider(names_from = EPU, values_from = value)
 ```
 
 ```{r}
