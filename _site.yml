@@ -12,4 +12,6 @@ navbar:
       href: Visualize.html
     - text: "Map"
       href: Map.html
+    - text: "Report"
+      href: Report.html
 output_dir: "."
